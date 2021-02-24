@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  alphapose:
+    image: michalgregor/alphapose:base
+    volumes:
+      - bashhistory:/root/hist # bash history
+      #- ./alphapose:/alphapose
+    environment:
+      HISTFILE: /root/hist/.bash_history # bash history
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - capabilities: [gpu]
+    
+volumes:
+  bashhistory: # bash history
+
+# to run commands in a new container and then remove it after use:
+#   docker-compose run --rm alphapose bash

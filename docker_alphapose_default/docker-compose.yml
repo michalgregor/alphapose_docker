@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  alphapose:
+    image: michalgregor/alphapose:default
+    volumes:
+      - bashhistory:/root/hist # bash history
+      - ./alphapose:/alphapose
+    environment:
+      HISTFILE: /root/hist/.bash_history # bash history
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - capabilities: [gpu]
+    
+volumes:
+  bashhistory: # bash history
+
+# to run commands in a new container and then remove it after use:
+#   docker-compose run --rm alphapose bash
+#
+# to run the demo, you can use:
+#   docker-compose run --rm alphapose bash python3 scripts/demo_inference.py --cfg configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint pretrained_models/fast_res50_256x192.pth --indir examples/demo/ --save_img
+#
+
